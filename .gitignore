@@ -1,0 +1,74 @@
+# .gitignore for Java webapp (Tomcat/Eclipse/IntelliJ)
+# Ignore compiled class files
+**/*.class
+/build/
+/build/**/*
+/bin/
+/out/
+/classes/
+
+# Maven/Gradle
+/target/
+/.gradle/
+.gradle/
+
+# IDEs
+/.settings/
+/.project
+/.classpath
+/.factorypath
+/.idea/
+*.iml
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swx
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java packaging
+*.war
+*.ear
+*.jar
+
+# Tomcat / app server
+work/
+temp/
+logs/
+
+# Eclipse specific
+.metadata/
+.recommenders/
+.settings/
+
+# Generated files
+*.class
+*.map
+
+# Ignore coverage and test output
+coverage/
+*.lcov
+
+# Ignore environment files
+.env
+
+# Ignore node_modules if present
+node_modules/
+
+# SSL certs, keystores
+*.jks
+*.keystore
+
+# Ignore IDE run/debug configs
+/.idea/**/workspace.xml
+/.idea/**/tasks.xml
+
+# Keep WebContent/WEB-INF/lib jars tracked (do not ignore WebContent/WEB-INF/lib)
+# If you prefer to ignore local jars uncomment the following line:
+# WebContent/WEB-INF/lib/*.jar
