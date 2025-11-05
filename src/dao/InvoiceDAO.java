@@ -24,7 +24,7 @@ public class InvoiceDAO  extends DAO{
     
     public Invoice getById(int invoiceId) {
         String sql = 
-            "SELECT inv.id, inv.createdTime, inv.status, inv.licensePlate, " +
+            "SELECT inv.id, inv.createdTime, inv.status, inv.licensePlate, inv.totalPrice, " +
             "       cu.tblMemberid AS customerId, m.fullname AS customerName, m.email AS email, m.phoneNumber AS phoneNumber, cu.customerId AS customerIdCode, " +
             "       ss.tblMemberid AS saleStaffId, sm.fullname AS saleStaffName " +
             "FROM tblInvoice inv " +
@@ -53,17 +53,16 @@ public class InvoiceDAO  extends DAO{
                     saleMember.setFullname(rs.getString("saleStaffName"));
                     SaleStaff saleStaff = new SaleStaff(saleMember);
 
-                    Invoice invoice = new Invoice(
-                        rs.getInt("id"),
-                        rs.getDate("createdTime").toLocalDate(),
-                        rs.getString("status"),
-                        rs.getString("licensePlate"),
-                        0f, 
-                        null,
-                        saleStaff,
-                        null,
-                        null
-                    );
+                    Invoice invoice = new Invoice();
+                    invoice.setCustomer(customer);
+                    invoice.setId(rs.getInt("id"));
+                    invoice.setCreatedTime( rs.getTimestamp("createdTime"));
+                    invoice.setLicensePlate(rs.getString("licensePlate"));
+                    invoice.setStatus(rs.getString("status"));
+                    invoice.setTotalPrice(0f);
+                    invoice.setSaleStaff(saleStaff);
+                    invoice.setTotalPrice(rs.getFloat("totalPrice"));
+
 
                     String sqlItems =
                         "SELECT os.id AS orderId, os.quantity AS quantity, os.salePrice AS salePrice, " +
@@ -108,7 +107,7 @@ public class InvoiceDAO  extends DAO{
 
                                     OrderedSparePart osp = new OrderedSparePart();
                                     osp.setId(rsItems.getInt("orderId"));
-                                    osp.setQuantity(rsItems.getFloat("quantity"));
+                                    osp.setQuantity(rsItems.getInt("quantity"));
                                     osp.setUnitPrice(rsItems.getFloat("salePrice"));
                                     osp.setTotalPrice(osp.getQuantity() * osp.getUnitPrice());
                                     osp.setSparePart(spareObj);
@@ -127,7 +126,7 @@ public class InvoiceDAO  extends DAO{
                     invoice.setSparePartList(spareList);
                     invoice.setServicePrice(servicePrice);
                     invoice.setSparePartPrice(sparePrice);
-                    invoice.setTotalPrice(servicePrice + sparePrice);
+                    
 
                     return invoice;
                 }
@@ -142,35 +141,27 @@ public class InvoiceDAO  extends DAO{
         List<Invoice> result = new ArrayList<>();
 
         String sql = 
-        	    "SELECT inv.id, inv.createdTime, inv.status, inv.licensePlate, " +
-        	    "       cu.tblMemberid AS customerId, m.fullname AS customerName, m.email AS email, m.phoneNumber AS phoneNumber, cu.customerId AS customerIdCode, " +
-        	    "       ss.tblMemberid AS saleStaffId, sm.fullname AS saleStaffName, " +
-        	    "       (IFNULL(SUM(os.quantity * os.salePrice), 0) + " +
-        	    "        IFNULL(SUM(osp.quantity * osp.salePrice), 0)) AS totalPrice " +
-        	    "FROM tblInvoice inv " +
-        	    "JOIN tblCustomer cu ON inv.tblCustomerid = cu.tblMemberid " +
-        	    "JOIN tblMember m ON cu.tblMemberid = m.id " +
-        	    "JOIN tblSaleStaff ss ON inv.tblSaleStaffid = ss.tblMemberid " +
-        	    "JOIN tblMember sm ON ss.tblMemberid = sm.id " +
-        	    "LEFT JOIN tblOrderedService os ON os.tblInvoiceid = inv.id " +
-        	    "LEFT JOIN tblOrderedSparePart osp ON osp.tblInvoiceid = inv.id " +
-        	    "WHERE inv.tblCustomerid = ? ";
+                "SELECT inv.id, inv.createdTime, inv.status, inv.licensePlate, inv.totalPrice, " + 
+                "       cu.tblMemberid AS customerId, m.fullname AS customerName, m.email AS email, m.phoneNumber AS phoneNumber, cu.customerId AS customerIdCode, " +
+                "       ss.tblMemberid AS saleStaffId, sm.fullname AS saleStaffName " +
+                "FROM tblInvoice inv " +
+                "JOIN tblCustomer cu ON inv.tblCustomerid = cu.tblMemberid " +
+                "JOIN tblMember m ON cu.tblMemberid = m.id " +
+                "JOIN tblSaleStaff ss ON inv.tblSaleStaffid = ss.tblMemberid " +
+                "JOIN tblMember sm ON ss.tblMemberid = sm.id " +
+                "WHERE inv.tblCustomerid = ? ";
 
-
-        boolean hasStart = (startDate != null);
-        boolean hasEnd = (endDate != null);
-        if (hasStart && hasEnd) {
-            sql += "AND inv.createdTime >= ? AND inv.createdTime < DATE_ADD(?, INTERVAL 1 DAY) ";
-        } else if (hasStart) {
-            sql += "AND inv.createdTime >= ? ";
-        } else if (hasEnd) {
-            sql += "AND inv.createdTime < DATE_ADD(?, INTERVAL 1 DAY) ";
-        }
-
-
-        sql += " GROUP BY inv.id, inv.createdTime, inv.status, inv.licensePlate, " +
-                "cu.tblMemberid, m.fullname, cu.customerId, ss.tblMemberid, sm.fullname " +
-                " ORDER BY inv.createdTime ASC";
+            boolean hasStart = (startDate != null);
+            boolean hasEnd = (endDate != null);
+            if (hasStart && hasEnd) {
+                sql += "AND inv.createdTime >= ? AND inv.createdTime < DATE_ADD(?, INTERVAL 1 DAY) ";
+            } else if (hasStart) {
+                sql += "AND inv.createdTime >= ? ";
+            } else if (hasEnd) {
+                sql += "AND inv.createdTime < DATE_ADD(?, INTERVAL 1 DAY) ";
+            }
+            
+            sql += " ORDER BY inv.createdTime ASC";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             int index = 1;
@@ -203,7 +194,7 @@ public class InvoiceDAO  extends DAO{
                 // invoice
                 Invoice invoice = new Invoice(
                     rs.getInt("id"),
-                    rs.getDate("createdTime").toLocalDate(),
+                    rs.getTimestamp("createdTime"),
                     rs.getString("status"),
                     rs.getString("licensePlate"),
                     rs.getFloat("totalPrice"),

@@ -1,11 +1,13 @@
 package model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Invoice {
 	private int id;
-	private LocalDate createdTime;
+	private Timestamp  createdTime;
 	private String status;
 	private String licensePlate;
 	private float servicePrice;
@@ -16,9 +18,11 @@ public class Invoice {
 	private List<OrderedService> serviceList;
 	private List<OrderedSparePart> sparePartList;
 	
+	public Invoice() {
+		
+	}
 	
-	
-	public Invoice(int id, LocalDate createdTime, String status, String licensePlate, float totalPrice,
+	public Invoice(int id, Timestamp createdTime, String status, String licensePlate, float totalPrice,
 			Customer customer, SaleStaff saleStaff, List<OrderedService> serviceList,
 			List<OrderedSparePart> sparePartList) {
 		super();
@@ -38,10 +42,10 @@ public class Invoice {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public LocalDate getCreatedTime() {
+	public Timestamp getCreatedTime() {
 		return createdTime;
 	}
-	public void setCreatedTime(LocalDate createdTime) {
+	public void setCreatedTime(Timestamp createdTime) {
 		this.createdTime = createdTime;
 	}
 	public String getStatus() {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,75 +9,78 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            margin: 0;
+            padding-top: 60px;
             background-color: #f6f8fa;
         }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
+
+        /* 🔹 Navbar cố định */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
         }
-        .search-container {
-            width: 500px;
-            margin: 0 auto 30px auto;
+        .navbar-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .navbar-user {
+            font-size: 15px;
+        }
+
+        /* 🔹 Container chính */
+        .container {
+            width: 1200px;
+            margin: 30px auto;
             background: white;
-            padding: 20px;
+            padding: 20px 25px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .form-row {
-            display: grid;
-            grid-template-columns: 120px 150px auto;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: center;
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
-        .form-row label {
+
+        /* 🔹 Form tìm kiếm */
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        label {
             color: #34495e;
             font-weight: normal;
         }
         input[type="date"] {
-            padding: 5px;
+            padding: 6px 10px;
             border: 1px solid #ccc;
-            width: 130px;
+            border-radius: 4px;
         }
         button {
-            padding: 5px 15px;
-            background-color: #add8e6;
-            color: black;
-            border: 1px solid #ccc;
+            padding: 7px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: white;
             cursor: pointer;
-            margin-left: 10px;
         }
         button:hover {
             background-color: #2980b9;
-        }
-        table {
-            width: 70%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #3498db;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .total-revenue {
-            width: 70%;
-            margin: 20px auto;
-            text-align: right;
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 1.1em;
         }
         .back-btn {
             background-color: #95a5a6;
@@ -84,64 +88,139 @@
         .back-btn:hover {
             background-color: #7f8c8d;
         }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+
+        /* 🔹 Bảng */
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        tr:hover {
+            background-color: #ecf0f1;
+        }
+
+        .view-btn {
+            background-color: #27ae60;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .view-btn:hover {
+            background-color: #219150;
+        }
+
+        /* 🔹 Tổng doanh thu */
+        .total-revenue {
+            text-align: right;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 15px;
+        }
+
+        /* 🔹 Thông báo */
+        .no-data {
+            text-align: center;
+            color: red;
+            margin-top: 20px;
         }
     </style>
-   
 </head>
 <body>
-    <h2>THỐNG KÊ KHÁCH HÀNG THEO DOANH THU</h2>
 
-    <div class="search-container">
-        <form action="customerStat" method="get">
-            <div class="form-row">
-                <label>Ngày bắt đầu:</label>
-                <input type="date" name="startDate" value="${startDate}">
-                <button type="submit" name="action" value="getstat">Thống kê</button>
-            </div>
-            <div class="form-row">
-                <label>Ngày kết thúc:</label>
-                <input type="date" name="endDate" value="${endDate}">
-                <button type="button" onclick="window.history.back()">Trở lại</button>
-            </div>
-        </form>
+<!-- Navbar -->
+<div class="navbar">
+    <div class="navbar-title">Thống kê khách hàng theo doanh thu</div>
+    <div class="navbar-user">
+        Xin chào, <strong>${user.fullname}</strong>
     </div>
+</div>
 
+<!-- Container -->
+<div class="container">
+    <h2>THỐNG KÊ KHÁCH HÀNG</h2>
+
+    <!-- Form tìm kiếm -->
+    <form action="customerStat" method="get">
+        <div class="form-row">
+            <label>Ngày bắt đầu:</label>
+            <input type="date" name="startDate" value="${startDate}">
+            <label>Ngày kết thúc:</label>
+            <input type="date" name="endDate" value="${endDate}">
+            <button type="submit" name="action" value="getstat">Thống kê</button>
+            <button type="button" class="back-btn" onclick="window.history.back()">Trở lại</button>
+        </div>
+    </form>
+
+    <!-- Bảng dữ liệu -->
     <c:if test="${not empty customers}">
-        <table>
-            <tr>
-                <th>STT</th>
-                <th>Mã KH</th>
-                <th>Tên KH</th>
-                <th>Doanh thu (Nghìn VNĐ)</th>
-            </tr>
-            <c:forEach var="customer" items="${customers}" varStatus="loop">
-                <tr>
-                    <td>${loop.index + 1}</td>
-                    <td>${customer.customerId}</td>
-                    <td>
-                        <a href="invoiceList?action=view&customerId=${customer.id}&startDate=${startDate}&endDate=${endDate}" 
-                           style="text-decoration: none; color: #2c3e50;">
-                            ${customer.fullname}
-                        </a>
-                    </td>
-                    <td>${customer.totalRevenue}</td>
-                </tr>
-            </c:forEach>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã KH</th>
+                        <th>Tên khách hàng</th>
+                        <th>Doanh thu</th>
+                        <th>Xem chi tiết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="customer" items="${customers}" varStatus="loop">
+                        <tr>
+                            <td style="text-align:center;">${loop.index + 1}</td>
+                            <td>${customer.customerId}</td>
+                            <td>
+                                <a href="invoiceList?action=view&customerId=${customer.id}&startDate=${startDate}&endDate=${endDate}"
+                                   style="text-decoration: none; color: #2c3e50;">
+                                    ${customer.fullname}
+                                </a>
+                            </td>
+                            <td style="text-align:right;">
+                                <fmt:formatNumber value="${customer.totalRevenue * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="invoiceList?action=view&customerId=${customer.id}&startDate=${startDate}&endDate=${endDate}" 
+                                   class="view-btn">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <div class="total-revenue">
-            Tổng doanh thu: ${totalRevenue} Nghìn VNĐ
+            Tổng doanh thu: 
+            <fmt:formatNumber value="${totalRevenue * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ
         </div>
     </c:if>
 
     <c:if test="${empty customers && startDate != null}">
-        <p style="text-align:center; color:red;">
+        <p class="no-data">
             Không có dữ liệu thống kê trong khoảng thời gian từ ${startDate} đến ${endDate}
         </p>
     </c:if>
+</div>
+
 </body>
 </html>

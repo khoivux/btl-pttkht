@@ -66,5 +66,8 @@ public class Member {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-	
+	@Override
+	public String toString() {
+		return fullname + " " + email;
+	}
 }

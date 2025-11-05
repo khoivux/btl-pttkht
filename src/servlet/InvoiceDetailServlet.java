@@ -30,7 +30,9 @@ public class InvoiceDetailServlet extends HttpServlet {
 				
 				InvoiceDAO invoiceDAO = new InvoiceDAO();
 				Invoice invoice = invoiceDAO.getById(id);
+				System.out.println("USER" + invoice.getCustomer());
 				request.setAttribute("invoice", invoice);
+				System.out.println(invoice.getCreatedTime());
 			} catch (NumberFormatException ex) {
 				request.setAttribute("invoice", null);
 			}

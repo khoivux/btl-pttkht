@@ -4,7 +4,7 @@ public class OrderedSparePart {
 	private int id;
 	private float unitPrice;
 	private SparePart sparePart;
-	private float quantity;
+	private int quantity;
 	private float totalPrice;
 	public int getId() {
 		return id;
@@ -24,10 +24,10 @@ public class OrderedSparePart {
 	public void setSparePart(SparePart sparePart) {
 		this.sparePart = sparePart;
 	}
-	public float getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(float quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 	public float getTotalPrice() {

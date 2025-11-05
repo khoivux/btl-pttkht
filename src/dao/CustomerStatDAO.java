@@ -20,17 +20,12 @@ public class CustomerStatDAO extends DAO {
         List<CustomerStat> result = new ArrayList<>();
 
         String sql = 
-            "SELECT c.tblMemberid AS id, c.customerId AS customerId, " +
-            "       m.username, m.fullname, m.email, m.phoneNumber, " +
-            "       IFNULL(SUM(os.quantity * os.salePrice), 0) + " +
-            "       IFNULL(SUM(osp.quantity * osp.salePrice), 0) AS totalRevenue " +
-            "FROM tblCustomer c " +
-            "JOIN tblMember m ON c.tblMemberid = m.id " +
-            "LEFT JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid " +
-            "LEFT JOIN tblOrderedService os ON os.tblInvoiceid = inv.id " +
-            "LEFT JOIN tblOrderedSparePart osp ON osp.tblInvoiceid = inv.id "
-        ;
-
+                "SELECT c.tblMemberid AS id, c.customerId AS customerId, " +
+                "       m.username, m.fullname, m.email, m.phoneNumber, " +
+                "       IFNULL(SUM(inv.totalPrice), 0) AS totalRevenue " + 
+                "FROM tblCustomer c " +
+                "JOIN tblMember m ON c.tblMemberid = m.id " +
+                "LEFT JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid ";
  
         boolean hasStart = (startDate != null);
         boolean hasEnd = (endDate != null);
@@ -79,16 +74,13 @@ public class CustomerStatDAO extends DAO {
      * Get customer stat for a single customer id within optional date range.
      */
     public CustomerStat getCustomerStatById(int customerId, Date startDate, Date endDate) {
-        String sql =
-            "SELECT c.tblMemberid AS id, c.customerId AS customerId, " +
-            "       m.username, m.fullname, m.email, m.phoneNumber, " +
-            "       IFNULL(SUM(os.quantity * os.salePrice), 0) + " +
-            "       IFNULL(SUM(osp.quantity * osp.salePrice), 0) AS totalRevenue " +
-            "FROM tblCustomer c " +
-            "JOIN tblMember m ON c.tblMemberid = m.id " +
-            "JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid " +
-            "LEFT JOIN tblOrderedService os ON os.tblInvoiceid = inv.id " +
-            "LEFT JOIN tblOrderedSparePart osp ON osp.tblInvoiceid = inv.id " ;
+    	String sql =
+    	        "SELECT c.tblMemberid AS id, c.customerId AS customerId, " +
+    	        "       m.username, m.fullname, m.email, m.phoneNumber, " +
+    	        "       IFNULL(SUM(inv.totalPrice), 0) AS totalRevenue " + 
+    	        "FROM tblCustomer c " +
+    	        "JOIN tblMember m ON c.tblMemberid = m.id " +
+    	        "LEFT JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid ";
 
         boolean hasStart = (startDate != null);
         boolean hasEnd = (endDate != null);
