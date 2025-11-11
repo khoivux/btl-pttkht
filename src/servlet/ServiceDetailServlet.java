@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Service;
 import dao.ServiceDAO;
 
-@WebServlet("/serviceDetail")
+@WebServlet("/customer/serviceDetail")
 public class ServiceDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +33,6 @@ public class ServiceDetailServlet extends HttpServlet {
                 request.setAttribute("error", "Id dịch vụ không hợp lệ");
             }
         }
-        request.getRequestDispatcher("serviceDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/serviceDetailView.jsp").forward(request, response);
     }
 }

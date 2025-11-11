@@ -2,7 +2,7 @@ package model;
 
 public class OrderedSparePart {
 	private int id;
-	private float unitPrice;
+	private float salePrice;
 	private SparePart sparePart;
 	private int quantity;
 	private float totalPrice;
@@ -12,11 +12,12 @@ public class OrderedSparePart {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public float getUnitPrice() {
-		return unitPrice;
+	
+	public float getSalePrice() {
+		return salePrice;
 	}
-	public void setUnitPrice(float unitPrice) {
-		this.unitPrice = unitPrice;
+	public void setSalePrice(float salePrice) {
+		this.salePrice = salePrice;
 	}
 	public SparePart getSparePart() {
 		return sparePart;

@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("member/login.jsp").forward(request, response);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         Member user = memberDAO.authenticate(username, password);
         if (user == null) {
             request.setAttribute("error", "Login failed");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("member/login.jsp").forward(request, response);
             return;
         }
 
@@ -47,10 +47,10 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("user", user);
 
         if (user instanceof Manager) {
-            response.sendRedirect("managerMainView.jsp");
+            response.sendRedirect("manager/managerMainView.jsp");
             return;
         }
 
-        response.sendRedirect("customerMainView.jsp");
+        response.sendRedirect("customer/customerMainView.jsp");
     }
 }

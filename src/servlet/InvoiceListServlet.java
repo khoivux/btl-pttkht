@@ -16,7 +16,7 @@ import dao.CustomerStatDAO;
 import model.Customer;
 import model.CustomerStat;
 import model.Invoice;
-@WebServlet("/invoiceList")
+@WebServlet("/manager/invoiceList")
 public class InvoiceListServlet extends HttpServlet{
 	private InvoiceDAO invoiceDAO;
     private CustomerStatDAO customerStatDAO;
@@ -72,6 +72,6 @@ public class InvoiceListServlet extends HttpServlet{
         } else {
             request.setAttribute("invoices", null);
         }
-        request.getRequestDispatcher("invoiceList.jsp").forward(request, response);
+        request.getRequestDispatcher("/manager/invoiceList.jsp").forward(request, response);
     }
 }

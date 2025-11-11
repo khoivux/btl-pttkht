@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.SparePart;
 import dao.SparePartDAO;
 
-@WebServlet("/sparePartDetail")
+@WebServlet("/customer/sparePartDetail")
 public class SparePartDetailServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,7 +33,7 @@ public class SparePartDetailServlet extends HttpServlet {
                 request.setAttribute("error", "Id phụ tùng không hợp lệ");
             }
         }
-        request.getRequestDispatcher("sparePartDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/sparePartDetailView.jsp").forward(request, response);
     }
 
 }

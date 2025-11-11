@@ -14,6 +14,7 @@
             background-color: #f6f8fa;
         }
         h2 {
+        	padding-top: 40px;
             text-align: center;
             color: #2c3e50;
             margin-bottom: 30px;
@@ -64,9 +65,43 @@
             text-align: center;
             margin: 20px 0;
         }
+        .navbar {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 40px;
+		    background-color: #3498db;
+		    color: white;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    padding: 0 20px; 
+		    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		    z-index: 1000;
+		}
+		
+		/* Tiêu đề bên trái */
+		.navbar-title {
+		    font-size: 20px;
+		    font-weight: bold;
+		}
+		
+		/* Phần "Xin chào, username" bên phải */
+		.navbar-user {
+		    font-size: 16px;
+		    margin-right: 50px;
+		}
+		
     </style>
 </head>
 <body>
+  <div class="navbar">
+	    <div class="navbar-title">Chức năng tìm kiếm</div>
+	    <div class="navbar-user">
+	        Xin chào, <strong>${user.fullname}</strong>
+	    </div>
+	</div>
     <h2>Chi tiết thông tin phụ tùng</h2>
 
     <c:if test="${not empty error}">

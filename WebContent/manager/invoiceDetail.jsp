@@ -213,12 +213,12 @@
 <body>
 
 <!-- Navbar -->
-<div class="navbar">
-    <div class="navbar-title">Thống kê khách hàng theo doanh thu</div>
-    <div class="navbar-user">
-        Xin chào, <strong> Khôi Vũ</strong>
-    </div>
-</div>
+ <div class="navbar">
+	    <div class="navbar-title">Thống kê khách hàng theo doanh thu</div>
+	    <div class="navbar-user">
+	        Xin chào, <strong>${user.fullname}</strong>
+	    </div>
+	</div>
 
 <div class="container">
     <h2>CHI TIẾT HÓA ĐƠN</h2>
@@ -257,7 +257,7 @@
                                 <tr>
                                     <td>${loop.index + 1}</td>
                                     <td>${service.service.name}</td>
-                                    <td><fmt:formatNumber value="${service.unitPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                    <td><fmt:formatNumber value="${service.salePrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                     <td>${service.quantity}</td>
                                     <td><fmt:formatNumber value="${service.totalPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                 </tr>
@@ -278,7 +278,7 @@
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${service.service.name}</td>
-                                <td><fmt:formatNumber value="${service.unitPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                <td><fmt:formatNumber value="${service.salePrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                 <td>${service.quantity}</td>
                                 <td><fmt:formatNumber value="${service.totalPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                             </tr>
@@ -309,7 +309,7 @@
                                 <tr>
                                     <td>${loop.index + 1}</td>
                                     <td>${sparePart.sparePart.name}</td>
-                                    <td><fmt:formatNumber value="${sparePart.unitPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                    <td><fmt:formatNumber value="${sparePart.salePrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                     <td>${sparePart.quantity}</td>
                                     <td><fmt:formatNumber value="${sparePart.totalPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                 </tr>
@@ -330,7 +330,7 @@
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${sparePart.sparePart.name}</td>
-                                <td><fmt:formatNumber value="${sparePart.unitPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
+                                <td><fmt:formatNumber value="${sparePart.salePrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                                 <td>${sparePart.quantity}</td>
                                 <td><fmt:formatNumber value="${sparePart.totalPrice * 1000}" type="number" groupingUsed="true" maxFractionDigits="0"/> VNĐ</td>
                             </tr>

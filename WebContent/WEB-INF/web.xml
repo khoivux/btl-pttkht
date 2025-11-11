@@ -7,7 +7,7 @@
 
     <!-- Welcome file (trang mặc định khi khởi động ứng dụng) -->
     <welcome-file-list>
-    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>member/login.jsp</welcome-file>
 </welcome-file-list>
 
 </web-app>

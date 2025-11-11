@@ -51,9 +51,36 @@
             background-color: #2980b9;
             transform: scale(1.03);
         }
+        .navbar {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 40px;
+		    background-color: #3498db;
+		    color: white;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    padding: 0 20px; 
+		    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		    z-index: 1000;
+		}
+
+		/* Phần "Xin chào, username" bên phải */
+		.navbar-user {
+		    font-size: 16px;
+		    margin-right: 50px;
+		}
+		
     </style>
 </head>
 <body>
+  <div class="navbar">
+	    <div class="navbar-user">
+	        Xin chào, <strong>${user.fullname}</strong>
+	    </div>
+	</div>
 
     <h1>Trang chủ khách hàng</h1>
 

@@ -94,8 +94,8 @@ public class InvoiceDAO  extends DAO{
                                     OrderedService os = new OrderedService();
                                     os.setId(rsItems.getInt("orderId"));
                                     os.setQuantity(rsItems.getInt("quantity"));
-                                    os.setUnitPrice(rsItems.getFloat("salePrice"));
-                                    os.setTotalPrice(os.getQuantity() * os.getUnitPrice());
+                                    os.setSalePrice(rsItems.getFloat("salePrice"));
+                                    os.setTotalPrice(os.getQuantity() * os.getSalePrice());
                                     os.setService(serviceObj);
                                     serviceList.add(os);
                                 } else {
@@ -108,8 +108,8 @@ public class InvoiceDAO  extends DAO{
                                     OrderedSparePart osp = new OrderedSparePart();
                                     osp.setId(rsItems.getInt("orderId"));
                                     osp.setQuantity(rsItems.getInt("quantity"));
-                                    osp.setUnitPrice(rsItems.getFloat("salePrice"));
-                                    osp.setTotalPrice(osp.getQuantity() * osp.getUnitPrice());
+                                    osp.setSalePrice(rsItems.getFloat("salePrice"));
+                                    osp.setTotalPrice(osp.getQuantity() * osp.getSalePrice());
                                     osp.setSparePart(spareObj);
                                     spareList.add(osp);
                                 }

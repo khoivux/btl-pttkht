@@ -44,17 +44,18 @@ public class SparePartDAO extends DAO {
 
     public SparePart getById(int id) {
         try {
-            String sql = "SELECT * FROM tblSparePart WHERE id = ?";
+            String sql = "SELECT sp.id, sp.name, sp.price, sp.des, " +
+                         "IFNULL((SELECT SUM(im.quantity) FROM tblimportedpart im WHERE im.tblSparePartid = sp.id),0) - " +
+                         "IFNULL((SELECT SUM(os.quantity) FROM tblorderedsparepart os WHERE os.tblSparePartid = sp.id),0) AS quantity " +
+                         "FROM tblSparePart sp " +
+                         "WHERE sp.id = ?";
+
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setInt(1, id);
+
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                int qty = 0;
-                try {
-                    qty = rs.getInt("quantity");
-                } catch (Exception ex) {
-                    qty = 0;
-                }
+                int qty = rs.getInt("quantity"); // quantity tính toán
                 SparePart sp = new SparePart(
                     rs.getInt("id"),
                     rs.getString("name"),
@@ -69,4 +70,5 @@ public class SparePartDAO extends DAO {
         }
         return null;
     }
+
 }

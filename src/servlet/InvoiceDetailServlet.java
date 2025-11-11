@@ -15,7 +15,7 @@ import model.CustomerStat;
 import model.Invoice;
 import model.OrderedService;
 import model.OrderedSparePart;
-@WebServlet("/invoiceDetail")
+@WebServlet("/manager/invoiceDetail")
 public class InvoiceDetailServlet extends HttpServlet {
 
 
@@ -39,6 +39,6 @@ public class InvoiceDetailServlet extends HttpServlet {
 		} else {
 			request.setAttribute("invoice", null);
 		}
-		request.getRequestDispatcher("invoiceDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("/manager/invoiceDetail.jsp").forward(request, response);
 	}
 }

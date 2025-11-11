@@ -36,6 +36,7 @@
         }
         .navbar-user {
             font-size: 15px;
+            margin-right: 50px;
         }
 
         /* 🔹 Container chính */

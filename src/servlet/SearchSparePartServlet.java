@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.SparePartDAO;
 import model.SparePart;
 
-@WebServlet("/sparepart")
+@WebServlet("/customer/sparepart")
 public class SearchSparePartServlet extends HttpServlet {
     private SparePartDAO sparePartDAO;
 
@@ -35,6 +35,6 @@ public class SearchSparePartServlet extends HttpServlet {
             request.setAttribute("keyword", keyword);
         }
 
-        request.getRequestDispatcher("searchSparePart.jsp").forward(request, response);
+        request.getRequestDispatcher("/customer/searchSparePartView.jsp").forward(request, response);
     }
 }

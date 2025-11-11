@@ -15,7 +15,7 @@ import dao.ServiceDAO;
 import model.Service;
 
 
-@WebServlet("/service")
+@WebServlet("/customer/service")
 public class SearchServiceServlet extends HttpServlet{
 	private ServiceDAO serviceDAO;
     public void init() {
@@ -33,6 +33,6 @@ public class SearchServiceServlet extends HttpServlet{
             request.setAttribute("services", null);
             request.setAttribute("keyword", "");
         }
-    	request.getRequestDispatcher("searchService.jsp").forward(request, response);
+    	request.getRequestDispatcher("/customer/searchServiceView.jsp").forward(request, response);
     }
 }

@@ -23,9 +23,9 @@ public class CustomerStatDAO extends DAO {
                 "SELECT c.tblMemberid AS id, c.customerId AS customerId, " +
                 "       m.username, m.fullname, m.email, m.phoneNumber, " +
                 "       IFNULL(SUM(inv.totalPrice), 0) AS totalRevenue " + 
-                "FROM tblCustomer c " +
-                "JOIN tblMember m ON c.tblMemberid = m.id " +
-                "LEFT JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid ";
+                " FROM tblCustomer c " +
+                " JOIN tblMember m ON c.tblMemberid = m.id " +
+                " JOIN tblInvoice inv ON inv.tblCustomerid = c.tblMemberid ";
  
         boolean hasStart = (startDate != null);
         boolean hasEnd = (endDate != null);

@@ -6,7 +6,7 @@ public class OrderedService {
 	private int id;
 	private int quantity;
 	private float totalPrice;
-	private float unitPrice;
+	private float salePrice;
 	private Service service;
 	private List<Assignment> assignmentList;
 	public int getId() {
@@ -27,11 +27,12 @@ public class OrderedService {
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-	public float getUnitPrice() {
-		return unitPrice;
+	
+	public float getSalePrice() {
+		return salePrice;
 	}
-	public void setUnitPrice(float unitPrice) {
-		this.unitPrice = unitPrice;
+	public void setSalePrice(float salePrice) {
+		this.salePrice = salePrice;
 	}
 	public Service getService() {
 		return service;

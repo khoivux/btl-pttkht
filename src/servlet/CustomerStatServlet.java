@@ -15,7 +15,7 @@ import model.CustomerStat;
 import model.Service;
 import model.SparePart;
 
-@WebServlet("/customerStat")
+@WebServlet("/manager/customerStat")
 public class CustomerStatServlet extends HttpServlet{
 	private CustomerStatDAO customerStatDAO;
     public void init() {
@@ -66,6 +66,6 @@ public class CustomerStatServlet extends HttpServlet{
             request.setAttribute("customers", null);
         }
 
-        request.getRequestDispatcher("customerStat.jsp").forward(request, response);
+        request.getRequestDispatcher("/manager/customerStatView.jsp").forward(request, response);
     }
 }
