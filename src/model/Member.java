@@ -9,12 +9,10 @@ public class Member {
 	private String fullname;
 	private String email;
 	private String phoneNumber;
-	private Date dob;
 	public Member() {
 		
 	}
-	public Member(int id, String username, String password, String fullname, String email, String phoneNumber,
-			Date dob) {
+	public Member(int id, String username, String password, String fullname, String email, String phoneNumber) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -22,7 +20,6 @@ public class Member {
 		this.fullname = fullname;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
-		this.dob = dob;
 	}
 	public int getId() {
 		return id;
@@ -60,12 +57,7 @@ public class Member {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Date getDob() {
-		return dob;
-	}
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
+
 	@Override
 	public String toString() {
 		return fullname + " " + email;

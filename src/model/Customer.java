@@ -15,7 +15,6 @@ public class Customer extends Member {
             this.setFullname(member.getFullname());
             this.setEmail(member.getEmail());
             this.setPhoneNumber(member.getPhoneNumber());
-            this.setDob(member.getDob());
         }
     }
 

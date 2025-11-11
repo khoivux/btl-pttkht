@@ -9,8 +9,8 @@ public class Staff extends Member{
     	        member.getPassword(),
     	        member.getFullname(),
     	        member.getEmail(),
-    	        member.getPhoneNumber(),
-    	        member.getDob()
+    	        member.getPhoneNumber()
+ 
     	    );
         // role will be set later (fetched from staff table)
         this.role = null;
